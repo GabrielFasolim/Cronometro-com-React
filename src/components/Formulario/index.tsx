@@ -2,8 +2,11 @@ import React from 'react';
 import { text } from 'stream/consumers';
 import Botao from '../Botao'
 import style from './Formulario.module.scss'
+import { ITarefa } from '../../types/tarefa';
 
-class Formulario extends React.Component{
+class Formulario extends React.Component<{
+  setTarefas: React.Dispatch<React.SetStateAction<ITarefa[]>>
+}> { 
   state={
     tarefa: " " ,
     tempo: "00:00"
@@ -11,7 +14,8 @@ class Formulario extends React.Component{
 
   adicionarTarefa(evento: React.FormEvent<HTMLFormElement>){
     evento.preventDefault();
-    console.log('state', this.state);
+    this.props.setTarefas( tarefasAntigas => [...tarefasAntigas, {...this.state}] )
+    
   }
   render(){
     return(
@@ -46,7 +50,7 @@ class Formulario extends React.Component{
             max='01:30:00'
           />
         </div>
-       <Botao>
+       <Botao type="submit">
         Adicionar
        </Botao>
       </form>
